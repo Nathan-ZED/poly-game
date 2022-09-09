@@ -45,24 +45,33 @@ const AddPopup: NextPage<Props> = (props: Props) => {
     const bg = {
         background: bgColor
     }
-
-    const { ico, name } = context.editValues
-
+    let ico: string, name: string;
     let newColumn
 
+    if(props.editMode) {
+        ico = context.editValues.ico
+        name = context.editValues.name
+    }
+
+
     const addNewColumn = () => {
-        show(false)
-        const colCopy: any = [...columns]
-        const newID = colCopy.length + 1
-        newColumn = {
-            id: newID,
-            icon: icon,
-            name: colName,
-            color: bgColor,
-            games: []
+        if(colName === '') {
+            setError(true)
+        } else {
+            error ? setError(false) : null
+            show(false)
+            const colCopy: any = [...columns]
+            const newID = colCopy.length + 1
+            newColumn = {
+                id: newID,
+                icon: icon,
+                name: colName,
+                color: bgColor,
+                games: []
+            }
+            colCopy.unshift(newColumn)
+            setColumns(colCopy)
         }
-        colCopy.unshift(newColumn)
-        setColumns(colCopy)
     }
 
     const editColumn = () => {
@@ -101,7 +110,7 @@ const AddPopup: NextPage<Props> = (props: Props) => {
                             bgClass={styles.bg}>
                     <motion.div
                         onClick={(e) => e.stopPropagation()}
-                        variants={context.dropIn}
+                        variants={context.values.dropIn}
                         initial="hidden"
                         animate="visible"
                         exit="exit"
