@@ -27,7 +27,7 @@ const ColumnCard: NextPage<Props> = (props) => {
     const [isActive, setIsActive] = useState(false)
     const [isFav, setIsFav] = useState(props.isFav)
     const [games, setGame] = useState('')
-    const column = context.state.selectedCol
+    const column = context.values.state.selectedCol
 
     const {
         gameName,

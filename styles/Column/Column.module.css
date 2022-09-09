@@ -1,6 +1,7 @@
 .column {
     min-height: 100vh !important;
-    min-width: 100%;
+    min-width: 18vw;
+    max-width: 19vw;
     width: 100%;
     list-style: none;
     padding: 0;

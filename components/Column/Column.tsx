@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import styles from '../../styles/Column/Column.module.css'
 import ColumnHead from '../../components/Column/ColumnHead/ColumnHead'
 import ColumnCard from '../../components/Column/ColumnCard/ColumnCard'
-import {createContext, useContext, useEffect, useState} from 'react'
+import {createContext, MouseEventHandler, useContext, useEffect, useState} from 'react'
 import { Reorder, motion } from "framer-motion"
 import AppContext from "../../context/AppContext";
 
@@ -12,9 +12,10 @@ type Props = {
     show: Function,
     bgCallback: Function,
     column: any
+    showAdd: (show: boolean) => Function,
 }
 
-const Column: NextPage<Props> = (props) => {
+const Column: NextPage<Props> = (props:Props) => {
     const [color, setColor] = useState('rgba(251, 87, 121, 1)')
     const [selectedColumn, setSelectedColumn] = useState(props.column)
     const [games, setGames] = useState(selectedColumn.games)
@@ -32,8 +33,8 @@ const Column: NextPage<Props> = (props) => {
 
     const showAndGetColumn = (column: any) => {
         props.show(true)
-        getColumn(column)
         setSelectedColumn(column)
+        getColumn()
     }
 
     const newFavorite = (elem: any, active: boolean) => {
@@ -42,15 +43,9 @@ const Column: NextPage<Props> = (props) => {
         const addFav = [elem, ...favorites]
         const addGame = [...games, elem]
 
-        console.log(gameVar)
-        console.log(favoriteVar)
-        console.log(addFav)
-        console.log(addGame)
-
         if(active) {
             setFavorites(addFav);
             const res = gameVar.filter(item => item.name !== elem.name);
-            console.log(res)
             setGames(res);
         } else {
             setGames(addGame);
@@ -59,8 +54,14 @@ const Column: NextPage<Props> = (props) => {
         }
     }
 
-    const getColumn = (column: any) => {
-        context.state.selectedCol = selectedColumn
+    const getColumn = () => {
+        setSelectedColumn(props.column)
+        context.values.state.selectedCol = selectedColumn;
+        console.log(context.values.state.selectedCol)
+    }
+
+    const selectEditColumn = () => {
+        setSelectedColumn(props.column)
     }
 
     useEffect(() => {
@@ -69,12 +70,15 @@ const Column: NextPage<Props> = (props) => {
 
   return (
       <div className={styles.column} style={bg}>
-        <ColumnHead
-            icon={props.column.icon}
-            color={props.column.color}
-            name={props.column.name}
-            number={props.column.games.length}
-        />
+                <ColumnHead
+                    column={props.column}
+                    getColumn={getColumn}
+                    showAdd={props.showAdd}
+                    icon={props.column.icon}
+                    color={props.column.color}
+                    name={props.column.name}
+                    number={props.column.games.length}
+                />
         <Reorder.Group
             axis={'y'}
             values={games}

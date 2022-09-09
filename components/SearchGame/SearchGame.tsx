@@ -14,7 +14,7 @@ const SearchGame: NextPage<Props> = (props: Props) => {
 
     const context: any = useContext(AppContext);
     const baseUrl = 'https://api.rawg.io/api/';
-    const ApiKey = context.state.token
+    const ApiKey = context.values.state.token
 
     const [data, setData] = useState([]);
     const [inputValue, setInputValue] = useState('')
@@ -46,7 +46,7 @@ const SearchGame: NextPage<Props> = (props: Props) => {
     <Background show={props.show} bgClass={styles.bg}>
         <motion.form
             onClick={(e) => e.stopPropagation()}
-            variants={context.dropIn}
+            variants={context.values.dropIn}
             autoComplete="off"
             initial="hidden"
             animate="visible"

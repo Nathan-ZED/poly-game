@@ -10,6 +10,7 @@ type Props = {
     show: Function,
     setColumns: Function,
     visible: boolean,
+    editMode: boolean,
     columns: any,
 }
 
@@ -37,18 +38,23 @@ const AddPopup: NextPage<Props> = (props: Props) => {
     const [bgColor, setBgColor] = useState('#72D8F9')
     const [colName, setColName] = useState('')
     const [icon, setIcon] = useState('fa-brands fa-playstation')
-
     const context: any = useContext(AppContext)
     const {visible, show, columns, setColumns} = props;
+    const [error, setError] = useState(false)
+
     const bg = {
         background: bgColor
     }
+
+    const { ico, name } = context.editValues
+
+    let newColumn
 
     const addNewColumn = () => {
         show(false)
         const colCopy: any = [...columns]
         const newID = colCopy.length + 1
-        const newColumn = {
+        newColumn = {
             id: newID,
             icon: icon,
             name: colName,
@@ -58,6 +64,36 @@ const AddPopup: NextPage<Props> = (props: Props) => {
         colCopy.unshift(newColumn)
         setColumns(colCopy)
     }
+
+    const editColumn = () => {
+        if(colName === '') {
+            setError(true)
+        } else {
+            error ? setError(false) : null
+            show(false)
+            const colCopy: any = [...columns]
+            const colToEdit = colCopy.findIndex(el => el.name === name)
+            const newID = colCopy.length + 1
+            colCopy.slice(colToEdit, 1)
+            newColumn = {
+                id: newID,
+                icon: icon,
+                name: colName,
+                color: bgColor,
+                games: []
+            }
+            columns[colToEdit] = newColumn
+        }
+
+
+    }
+
+    useEffect(() => {
+        props.editMode
+            ? setBgColor(context.editValues.color)
+            : null
+    }, [])
+
 
         return (
             visible ?
@@ -72,7 +108,11 @@ const AddPopup: NextPage<Props> = (props: Props) => {
                         className={styles.input}>
                         <article className={styles.addPopup}>
                             <div className={styles.topPopup}>
-                                <h3>New List</h3>
+                                {
+                                    props.editMode
+                                        ? <h3>Edit List</h3>
+                                        : <h3>New List</h3>
+                                }
                                 <button onClick={() => show(false)}
                                         className={styles.closeBtn}>
                                     <i className="fa-solid fa-circle-xmark"></i>
@@ -80,9 +120,11 @@ const AddPopup: NextPage<Props> = (props: Props) => {
                             </div>
                             <div style={bg}
                                  className={styles.setName}>
-                                <select onChange={(e: ChangeEvent<HTMLSelectElement>) => setIcon(e.value)}
+                                <select
+                                    value={ico}
+                                    onChange={(e:ChangeEvent<HTMLSelectElement>) => setIcon(e.target.value)}
                                         className={styles.selectIcon}>
-                                    <option selected={true}
+                                    <option
                                             value="fa-brands fa-playstation">
                                         &#xf3df;
                                     </option>
@@ -90,25 +132,54 @@ const AddPopup: NextPage<Props> = (props: Props) => {
                                         &#xf390;
                                     </option>
                                 </select>
-                                <input
-                                    className={styles.text}
-                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setColName(e.target.value)}
-                                    type='text'
-                                    placeholder='PS5'/>
+                                {
+                                    props.editMode
+                                        ?
+                                        <input
+                                            className={styles.text}
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => setColName(e.target.value)}
+                                            type='text'
+                                            placeholder={name}
+                                        />
+                                        :
+                                        <input
+                                            className={styles.text}
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => setColName(e.target.value)}
+                                            type='text'
+                                            placeholder='PS5'
+                                        />
+                                }
                             </div>
+                            {
+                                error
+                                    ? <p className={styles.error}>Veuillez saisir un nom</p>
+                                    : null
+
+                            }
                             <div className={styles.colorWrapper}>
                                 <div>
-                                    {colors.map((color, i) => (
+                                    {colors.map((color:string, i: number) => (
                                         <ColorPicker
                                             changeColor={setBgColor}
                                             key={i}
-                                            bg={color}/>
+                                            bg={color}
+                                        />
                                     ))}
                                 </div>
-                                <button
-                                    onClick={() => addNewColumn()}
-                                    className={styles.addBtn}>Confirm
-                                </button>
+                                {
+                                    props.editMode
+                                        ?
+                                        <button
+                                            onClick={() => editColumn()}
+                                            className={styles.addBtn}>Confirm
+                                        </button>
+                                        :
+                                        <button
+                                            onClick={() => addNewColumn()}
+                                            className={styles.addBtn}>Confirm
+                                        </button>
+                                }
+
                             </div>
                         </article>
                     </motion.div>

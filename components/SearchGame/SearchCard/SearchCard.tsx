@@ -18,9 +18,9 @@ type Props = {
 const SearchCard: NextPage<Props> = (props) => {
 
     const context: any = useContext(AppContext);
-    let selectedItem: [any] = context.state.selectedItem;
+    let selectedItem: [any] = context.values.state.selectedItem;
     let lastId: number
-    const selected = context.state.selectedCol
+    const selected = context.values.state.selectedCol
     selected.games.length >= 1 ?
         lastId = selected.games[selected.games.length -1].id
         : lastId = 0

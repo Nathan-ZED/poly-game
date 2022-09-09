@@ -2,7 +2,7 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import '@fortawesome/fontawesome-free/css/all.css';
 import AppContext from "../context/AppContext";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 
 const values = {
     state: {
@@ -67,7 +67,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
       <AppContext.Provider
-      value={values}
+      value={{
+          values: values,
+          showAdd: [],
+      }}
       >
         <Component {...pageProps} />
       </AppContext.Provider>

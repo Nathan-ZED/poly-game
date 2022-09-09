@@ -4,7 +4,7 @@ import styles from '../styles/Home.module.css'
 import Nav from '../components/Nav/Nav'
 import Column from '../components/Column/Column'
 import SearchGame from '../components/SearchGame/SearchGame'
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import AddColumn from "../components/AddColumn/AddColumn";
 import {Reorder} from "framer-motion";
 import AddPopup from "../components/AddPopup/AddPopup";
@@ -15,25 +15,26 @@ const Home: NextPage = () => {
     const context: any = useContext(AppContext)
     const [searchVisible, setSearchVisible] = useState(false)
     const [addVisible, setAddVisible] = useState(false)
-    const [columns, setColumns] = useState(context.state.columns)
+    const [columns, setColumns] = useState(context.values.state.columns)
     const [isOd, setIsOdd] = useState(true)
+    const [editMode, setEditMode] = useState(false)
 
     const bgCallback = (b: boolean) => {
         b ? setIsOdd(!b) : setIsOdd(!b)
-        console.log(b)
     }
 
     const show = (show:boolean) => {
-        show
-            ? setSearchVisible(true)
-            : setSearchVisible(false)
+        setSearchVisible(show)
     }
 
-    const showAdd = (show: boolean) => {
-        show
-            ? setAddVisible(true)
-            : setAddVisible(false)
+    const showAdd = (show: boolean, edit: boolean) => {
+        setAddVisible(show)
+        setEditMode(edit)
     }
+
+    useEffect(() => {
+        context.showAdd = [addVisible, showAdd]
+    }, [])
 
   return (
     <>
@@ -42,26 +43,49 @@ const Home: NextPage = () => {
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <header>
-        <Nav css={styles} global={global}/>
+        <Nav
+            css={styles}
+            global={global}/>
       </header>
       <main>
-            <Reorder.Group axis={'x'} values={columns} onReorder={setColumns}  className={styles.list}>
+            <Reorder.Group
+                axis={'x'}
+                values={columns}
+                onReorder={setColumns}
+                className={styles.list}>
                     {columns.map((column: Object) =>
-                            <Reorder.Item value={column} key={column.id} className={styles.listLi} >
-                                <Column column={column} show={show} bgCallback={bgCallback} isOdd={isOd} />
+                            <Reorder.Item
+                                value={column}
+                                key={column.id}
+                                className={styles.listLi} >
+                                <Column
+                                    column={column}
+                                    show={show}
+                                    showAdd={(show: boolean) => showAdd}
+                                    bgCallback={bgCallback}
+                                    isOdd={isOd} />
                             </Reorder.Item>
                     )}
             </Reorder.Group>
-                <AddColumn show={showAdd}/>
+                <AddColumn
+                    show={showAdd}/>
           {
               searchVisible
-                  ? <SearchGame show={show} />
+                  ? <SearchGame
+                      show={show} />
                   : null
           }
           {
            addVisible
-                ? <AddPopup columns={columns} setColumns={setColumns} show={showAdd} visible={addVisible} />
-                : null
+                ?
+                   <AddPopup
+                       columns={columns}
+                       setColumns={setColumns}
+                       show={showAdd}
+                       editMode={editMode}
+                       visible={addVisible}
+                   />
+                    : null
           }
       </main>
     </>

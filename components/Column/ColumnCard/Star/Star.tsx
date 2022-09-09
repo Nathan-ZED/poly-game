@@ -20,7 +20,7 @@ const Star: NextPage<Props> = (props:Props) => {
 
     const {activate, isActive} = props
     const context: any = useContext(AppContext)
-    const column = context.state.selectedCol
+    const column = context.values.state.selectedCol
 
     const { id, gameName, callback } = props
 

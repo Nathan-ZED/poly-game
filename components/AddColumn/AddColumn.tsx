@@ -16,7 +16,7 @@ const AddColumn: NextPage<Props> = (props) => {
                 <aside className={styles.addColumn}>
                     <div className={styles.top}>
                         <motion.button
-                            onClick={() => show(true)}
+                            onClick={() => show(true, false)}
                             whileTap={{ scale: 0.9 }}
                             whileHover={{ scale: 1.1 }}
                         >
