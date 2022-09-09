@@ -1,0 +1,33 @@
+.addColumn {
+    display: flex;
+    background: rgba(42, 57, 61, 1);
+    bottom: 0;
+    height: 100vh;
+    min-width: 400px;
+    position: fixed;
+    right: 0;
+    top: 84px;
+    z-index: 10;
+}
+
+.addColumn .top {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(56, 69, 76, 1);
+}
+
+.addColumn button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 173, 255, 1);
+    border-radius: 50%;
+    border: none;
+    height: 32px;
+    font-size: 20px;
+    color: white;
+    width: 32px;
+}

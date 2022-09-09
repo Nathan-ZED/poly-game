@@ -1,0 +1,37 @@
+.column {
+    min-height: 100vh !important;
+    min-width: 100%;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+}
+
+.column ul.col{
+    min-height: 100%;
+}
+
+.column ul.col {
+    margin: 0 0 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0 !important;
+}
+
+.buttonWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: .5rem 0;
+}
+
+.column .buttonWrapper button {
+    border-radius: 50%;
+    color: rgba(0, 173, 255, 1);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.06);
+    border: none;
+    width: 27px;
+    height: 27px;
+    background-color: #fff;
+}

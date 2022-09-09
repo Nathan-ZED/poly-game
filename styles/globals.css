@@ -1,26 +1,58 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css');
+    font-style: normal;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+
+@font-face {
+    font-family: 'Font Awesome 5 Regular';
+    src: url('../public/assets/fonts/font-awesome/Font-Awesome-5-Regular-400.otf');
+    font-weight: 400;
+    font-style: normal;
 }
 
-* {
-  box-sizing: border-box;
+@font-face {
+    font-family: 'Font Awesome 5 Solid';
+    src: url('../public/assets/fonts/font-awesome/Font-Awesome-5-Solid-900.otf');
+    font-weight: 900;
+    font-style: normal;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
-}
+
+@font-face {
+    font-family: 'Righteous';
+    src: url('../public/assets/fonts/righteous/righteous.regular.ttf');
+    font-weight: 400;
+    font-style: normal;
+   }
+
+   @font-face {
+    font-family: 'Sarala';
+    src: url('../public/assets/fonts/sarala/Sarala\ 400.ttf');
+    font-weight: 400;
+    font-style: normal;
+   }    
+
+   @font-face {
+    font-family: 'Sarala';
+    src: url('../public/assets/fonts/sarala/Sarala\ Bold\ 700.ttf');
+    font-weight: 700;
+    font-style: auto;
+   }
+   
+    main {
+        font-family: 'Sarala', sans-serif;
+    }
+
+    ul {
+        padding: 0;
+    }
+
+    body {
+        margin: 0;
+        overflow-y: hidden;
+    }
+    body::-webkit-scrollbar {
+        display: none;
+    }

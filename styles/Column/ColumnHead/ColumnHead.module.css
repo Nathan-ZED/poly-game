@@ -1,0 +1,31 @@
+.flexCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .5rem 1rem;
+    color: #fff;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.17);
+    cursor: grab;
+}
+
+.flexCard:active {
+    cursor: grabbing;
+}
+
+.flexCard div {
+    display: flex;
+    align-items: center;
+}
+
+.flexCard button {
+    border: none;
+    color: #fff;
+    background: transparent;
+    font-size: 17px;
+    text-align: right;
+    cursor: pointer;
+}
+
+.flexCard h3 {
+    margin: 0 0 0 1rem;
+}
