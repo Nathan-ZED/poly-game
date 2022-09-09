@@ -7,8 +7,10 @@ import {ChangeEvent, useContext, useEffect, useState} from "react";
 import AppContext from "../../context/AppContext";
 
 type Props = {
-    visible: boolean,
     show: Function,
+    setColumns: Function,
+    visible: boolean,
+    columns: any,
 }
 
 const colors = [
@@ -37,21 +39,24 @@ const AddPopup: NextPage<Props> = (props: Props) => {
     const [icon, setIcon] = useState('fa-brands fa-playstation')
 
     const context: any = useContext(AppContext)
-    const {visible, show} = props;
+    const {visible, show, columns, setColumns} = props;
     const bg = {
         background: bgColor
     }
 
     const addNewColumn = () => {
         show(false)
-        context.state.columns.push({
-            id: 3,
+        const colCopy: any = [...columns]
+        const newID = colCopy.length + 1
+        const newColumn = {
+            id: newID,
             icon: icon,
             name: colName,
             color: bgColor,
             games: []
-        })
-        console.log(context.state.columns)
+        }
+        colCopy.unshift(newColumn)
+        setColumns(colCopy)
     }
 
         return (

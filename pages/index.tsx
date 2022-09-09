@@ -12,10 +12,9 @@ import AppContext from "../context/AppContext";
 
 
 const Home: NextPage = () => {
+    const context: any = useContext(AppContext)
     const [searchVisible, setSearchVisible] = useState(false)
     const [addVisible, setAddVisible] = useState(false)
-
-    const context: any = useContext(AppContext)
     const [columns, setColumns] = useState(context.state.columns)
     const [isOd, setIsOdd] = useState(true)
 
@@ -61,7 +60,7 @@ const Home: NextPage = () => {
           }
           {
            addVisible
-                ? <AddPopup show={showAdd} visible={addVisible} />
+                ? <AddPopup columns={columns} setColumns={setColumns} show={showAdd} visible={addVisible} />
                 : null
           }
       </main>
