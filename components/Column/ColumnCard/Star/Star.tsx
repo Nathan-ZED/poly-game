@@ -7,37 +7,37 @@ import AppContext from "../../../../context/AppContext";
 
 
 type Props = {
-    activate: Function,
-    newFav: Function,
-    callback: Function,
-    isActive: boolean,
+    putCardFavorite: Function,
+    setFavorite: Function,
+    game: any
+    isFavorite: boolean,
     id: number,
-    gameName: string,
 }
 
 
 const Star: NextPage<Props> = (props:Props) => {
 
-    const {activate, isActive} = props
-    const context: any = useContext(AppContext)
-    const column = context.values.state.selectedCol
+    const { putCardFavorite, isFavorite, game } = props
 
-    const { id, gameName, callback } = props
+
+    const putActive = (activ: boolean) => {
+        putCardFavorite(activ)
+    }
 
   return (
     <div className={styles.star}>
     {
-        isActive
-        ? 
-        <button onClick={() => callback(column, id, gameName, false)}>
+        game.favorite
+        ?
+        <button onClick={() => putActive(false)}>
             <i className="fa-solid fa-star"></i>
             <div className={styles.bg}></div>
         </button>
-        : 
-        <button onClick={(e) => callback(column, id, gameName, true)}>
+        :
+        <button onClick={() => putActive(true)}>
             <i className="fa-regular fa-star"></i>
         </button>
-    } 
+    }
     </div>
   )
 }

@@ -9,63 +9,57 @@ import AppContext from "../../../context/AppContext";
 import noImg from '../../../public/assets/images/no-img.jpeg'
 
 type Props = {
-    isFav: boolean,
-    gameInfo: object,
+    isFavoriteCard: boolean,
+    gameInfo: any,
+    newFavorite: Function,
     id: number,
     gameName: string,
     gameGenre: string,
+    gamePlatform?: [],
     gameImg: string,
-    gamePlatform: string,
-    newFav: Function,
 }
 
-
 const ColumnCard: NextPage<Props> = (props) => {
-
-    const [imgUrl, setImgUrl] = useState('')
+    const { id, gameName, gameGenre, gamePlatform, gameImg } = props
+    const {gameInfo} = props
+    const [imgUrl, setImgUrl] = useState(gameImg)
     const context: any = useContext(AppContext)
-    const [isActive, setIsActive] = useState(false)
-    const [isFav, setIsFav] = useState(props.isFav)
-    const [games, setGame] = useState('')
     const column = context.values.state.selectedCol
+    const [game, setGame] = useState(gameInfo)
 
-    const {
-        gameName,
-        gameGenre,
-        gamePlatform,
-        id,
-        gameInfo,
-        gameImg,
-    } = props
+    const [isFavorite,  setIsFavorite] = useState<boolean>(false);
 
-    const callBackUp = (col: any, id: number, name:string, active: boolean) => {
-        let game = column.games.find(el => el.id === id);
-        game === undefined
-            ? game = column.games.find(el => el.name === name)
-            : null
-        props.newFav(game, active)
+    const putCardFavorite = async (active: any) => {
+        if(active) {
+            setIsFavorite(true)
+            gameInfo.favorite = true
+        } else {
+            setIsFavorite(false)
+            gameInfo.favorite = false
+        }
+        props.newFavorite(gameInfo, active)
     }
 
     useEffect(() => {
-        setImgUrl(gameImg)
-    }, [])
+        setGame(gameInfo)
+        setImgUrl(game.img)
+    }, [game.img, gameInfo])
 
 
   return (
-    <Reorder.Item key={id} id={`${id}`} value={gameInfo} className={styles.card}>
+    <Reorder.Item key={id} value={gameInfo} className={styles.card}>
                 <Star
-                    activate={setIsActive}
+                    putCardFavorite={(isFavorite: any) => putCardFavorite(isFavorite)}
                     id={id}
-                    callback={callBackUp}
-                    isActive={isFav}
-                    newFav={props.newFav}
-                    gameName={gameName}
+                    game={gameInfo}
+                    isFavorite={isFavorite}
+                    setFavorite={setIsFavorite}
                 />
         <article>
                     <Image
                         unoptimized={true}
                         src={imgUrl ? imgUrl : noImg}
-                        alt={gameName}
+                        alt={game.name}
                         width={'70px'}
                         height={'100%'}
                         className={styles.image}

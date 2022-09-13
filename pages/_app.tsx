@@ -12,28 +12,32 @@ const values = {
                 icon: 'fa-solid fa-database',
                 name: 'Liste de souhaits',
                 color: 'rgba(251, 87, 121, 1)',
-                games: []
+                games: [],
+                favorites: [],
             },
             {
                 id: 2,
                 icon: 'fa-brands fa-playstation',
                 name: 'Playstation',
                 color: 'rgba(0, 99, 251, 1)',
-                games: []
+                games: [],
+                favorites: [],
             },
             {
                 id: 3,
                 icon: 'fa-solid fa-gamepad',
                 name: 'Nintendo Switch',
                 color: 'rgba(255, 168, 0, 1)',
-                games: []
+                games: [],
+                favorites: [],
             },
             {
                 id: 4,
                 icon: 'fa-brands fa-xbox',
                 name: 'XBOX',
                 color: 'rgba(24, 219, 126, 1)',
-                games: []
+                games: [],
+                favorites: [],
             },
         ],
         token: 'cd9650e94d394c9db63f905156829c20',

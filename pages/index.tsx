@@ -12,29 +12,30 @@ import AppContext from "../context/AppContext";
 
 
 const Home: NextPage = () => {
-    const context: any = useContext(AppContext)
-    const [searchVisible, setSearchVisible] = useState(false)
-    const [addVisible, setAddVisible] = useState(false)
-    const [columns, setColumns] = useState(context.values.state.columns)
-    const [isOd, setIsOdd] = useState(true)
-    const [editMode, setEditMode] = useState(false)
+
+    const context: any = useContext(AppContext);
+    const [searchVisible, setSearchVisible] = useState(false);
+    const [addVisible, setAddVisible] = useState(false);
+    const [columns, setColumns] = useState(context.values.state.columns);
+    const [isOd, setIsOdd] = useState(true);
+    const [editMode, setEditMode] = useState(false);
 
     const bgCallback = (b: boolean) => {
-        b ? setIsOdd(!b) : setIsOdd(!b)
+        b ? setIsOdd(!b) : setIsOdd(!b);
     }
 
     const show = (show:boolean) => {
-        setSearchVisible(show)
+        setSearchVisible(show);
     }
 
     const showAdd = (show: boolean, edit: boolean) => {
-        setAddVisible(show)
-        setEditMode(edit)
+        setAddVisible(show);
+        setEditMode(edit);
     }
 
     useEffect(() => {
-        context.showAdd = [addVisible, showAdd]
-    }, [])
+        context.showAdd = [addVisible, showAdd];
+    }, [context, addVisible]);
 
   return (
     <>
@@ -53,18 +54,14 @@ const Home: NextPage = () => {
                 values={columns}
                 onReorder={setColumns}
                 className={styles.list}>
-                    {columns.map((column: Object) =>
-                            <Reorder.Item
-                                value={column}
-                                key={column.id}
-                                className={styles.listLi} >
+                    {columns.map((column: any) =>
                                 <Column
+                                    key={column.id}
                                     column={column}
                                     show={show}
                                     showAdd={(show: boolean) => showAdd}
                                     bgCallback={bgCallback}
                                     isOdd={isOd} />
-                            </Reorder.Item>
                     )}
             </Reorder.Group>
                 <AddColumn

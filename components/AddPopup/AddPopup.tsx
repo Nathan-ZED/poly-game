@@ -101,7 +101,7 @@ const AddPopup: NextPage<Props> = (props: Props) => {
         props.editMode
             ? setBgColor(context.editValues.color)
             : null
-    }, [])
+    }, [props.editMode, context.editValues])
 
 
         return (
@@ -141,23 +141,12 @@ const AddPopup: NextPage<Props> = (props: Props) => {
                                         &#xf390;
                                     </option>
                                 </select>
-                                {
-                                    props.editMode
-                                        ?
                                         <input
                                             className={styles.text}
                                             onChange={(e: ChangeEvent<HTMLInputElement>) => setColName(e.target.value)}
                                             type='text'
-                                            placeholder={name}
+                                            placeholder={props.editMode ? name : 'PS5'}
                                         />
-                                        :
-                                        <input
-                                            className={styles.text}
-                                            onChange={(e: ChangeEvent<HTMLInputElement>) => setColName(e.target.value)}
-                                            type='text'
-                                            placeholder='PS5'
-                                        />
-                                }
                             </div>
                             {
                                 error

@@ -2,8 +2,8 @@ import type { NextPage } from 'next'
 import styles from '../../styles/Column/Column.module.css'
 import ColumnHead from '../../components/Column/ColumnHead/ColumnHead'
 import ColumnCard from '../../components/Column/ColumnCard/ColumnCard'
-import {createContext, MouseEventHandler, useContext, useEffect, useState} from 'react'
-import { Reorder, motion } from "framer-motion"
+import { useContext, useState} from 'react'
+import { Reorder, motion, useDragControls } from "framer-motion"
 import AppContext from "../../context/AppContext";
 
 
@@ -16,11 +16,16 @@ type Props = {
 }
 
 const Column: NextPage<Props> = (props:Props) => {
-    const [color, setColor] = useState('rgba(251, 87, 121, 1)')
-    const [selectedColumn, setSelectedColumn] = useState(props.column)
-    const [games, setGames] = useState(selectedColumn.games)
-    const [favorites, setFavorites] = useState<any[]>([])
-    const context: any = useContext(AppContext)
+
+    const controls = useDragControls();
+
+    const [color, setColor] = useState('rgba(241, 245, 246, 1)');
+    const [selectedColumn, setSelectedColumn] = useState(props.column);
+    const [games, setGames] = useState<any>(selectedColumn.games);
+    const [favorites, setFavorites] = useState(selectedColumn.favorites);
+    const context: any = useContext(AppContext);
+    const [isFavoriteCard, setIsFavoriteCard] = useState(false);
+
     const bg = {
         background: color
       };
@@ -32,94 +37,95 @@ const Column: NextPage<Props> = (props:Props) => {
     }
 
     const showAndGetColumn = (column: any) => {
-        props.show(true)
-        setSelectedColumn(column)
-        getColumn()
+        props.show(true);
+        setSelectedColumn(column);
+        getColumn();
     }
 
     const newFavorite = (elem: any, active: boolean) => {
-        const gameVar = [...games]
-        const favoriteVar = [...favorites]
-        const addFav = [elem, ...favorites]
-        const addGame = [...games, elem]
+        let Games = [...games]
+        let count = 0;
+        Games.forEach(el => {
+            if(el.name !== elem.name) {
+                count++
+            } else {
+                Games.splice(count, 1)
+                count = 0
+                active ? elem.favorite = true : elem.favorite = false
+                active
+                    ? setGames([elem, ...Games])
+                    : setGames([...Games, elem])
 
-        if(active) {
-            setFavorites(addFav);
-            const res = gameVar.filter(item => item.name !== elem.name);
-            setGames(res);
-        } else {
-            setGames(addGame);
-            const res = favoriteVar.filter(item => item.name !== elem.name);
-            setFavorites(res);
-        }
+            }
+        })
+
+    }
+
+    const addNewGame = (game: any) => {
+        const newArr = [...games]
+        newArr.unshift(game)
+        setGames(newArr)
     }
 
     const getColumn = () => {
         setSelectedColumn(props.column)
+        context.getColumn = [selectedColumn, setSelectedColumn]
         context.values.state.selectedCol = selectedColumn;
-        console.log(context.values.state.selectedCol)
+        context.newGame = (el:any) => addNewGame(el)
     }
-
-    const selectEditColumn = () => {
-        setSelectedColumn(props.column)
-    }
-
-    useEffect(() => {
-        bgOdd(props)
-    }, [])
 
   return (
-      <div className={styles.column} style={bg}>
-                <ColumnHead
-                    column={props.column}
-                    getColumn={getColumn}
-                    showAdd={props.showAdd}
-                    icon={props.column.icon}
-                    color={props.column.color}
-                    name={props.column.name}
-                    number={props.column.games.length}
-                />
-        <Reorder.Group
-            axis={'y'}
-            values={games}
-            onReorder={setGames}
-            className={styles.col}
-        >
-            {favorites.map(((fav:any, i) => (
-                <ColumnCard
-                    isFav={true}
-                    newFav={newFavorite}
-                    key={fav.id}
-                    id={fav.id}
-                    gameInfo={fav}
-                    gameName={fav.name}
-                    gameGenre={fav.genre}
-                    gamePlatform={fav.platforms}
-                    gameImg={fav.img}/>
-            )))}
-            {games.map(((game:any) => (
-                    <ColumnCard
-                        isFav={false}
-                        newFav={newFavorite}
-                        key={game.id}
-                        id={game.id}
-                        gameInfo={game}
-                        gameName={game.name}
-                        gameGenre={game.genre}
-                        gamePlatform={game.platforms}
-                        gameImg={game.img}/>
-            )))}
-        </Reorder.Group>
-        <div className={styles.buttonWrapper}>
-            <motion.button
-                whileTap={{ scale: 0.9 }}
-                whileHover={{ scale: 1.1 }}
-                onClick={() => showAndGetColumn(props.column)}
+      <Reorder.Item
+          value={props.column}
+          key={props.column.id}
+          className={styles.listLi}
+          dragListener={false}
+          dragControls={controls}>
+
+          <div className={styles.column} style={bg}>
+              <div
+                  className="reorder-handle"
+                  onPointerDown={(e) => controls.start(e)}>
+                    <ColumnHead
+                        column={props.column}
+                        getColumn={getColumn}
+                        showAdd={props.showAdd}
+                        icon={props.column.icon}
+                        color={props.column.color}
+                        name={props.column.name}
+                        number={props.column.games.length}
+                    />
+              </div>
+            <Reorder.Group
+                axis={'y'}
+                values={games}
+                onReorder={setGames}
+                className={styles.col}
             >
-                <i className="fa-solid fa-plus"></i>
-            </motion.button>
-        </div>
-      </div>
+                {games.map(((game:any, i:number) => (
+                        <ColumnCard
+                            isFavoriteCard={isFavoriteCard}
+                            newFavorite={(elem:any, bool:boolean) => newFavorite(elem, bool)}
+                            key={i}
+                            id={game.name}
+                            gameInfo={game}
+                            gameName={game.name}
+                            gameGenre={game.genre}
+                            gamePlatform={game.platforms}
+                            gameImg={game.img}/>
+                )))}
+            </Reorder.Group>
+            <div className={styles.buttonWrapper}>
+                <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.1 }}
+                    onClick={() => showAndGetColumn(props.column)}
+                >
+                    <i className="fa-solid fa-plus"></i>
+                </motion.button>
+            </div>
+          </div>
+      </Reorder.Item>
   )
 }
 

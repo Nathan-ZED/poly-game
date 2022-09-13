@@ -3,7 +3,7 @@ import Image from 'next/image'
 import styles from '../../../styles/SearchGame/SearchCard/SearchCard.module.css'
 import '@fortawesome/fontawesome-free/css/all.css';
 import { motion } from 'framer-motion';
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import AppContext from "../../../context/AppContext";
 import noImg from '../../../public/assets/images/no-img.jpeg'
 
@@ -19,11 +19,8 @@ const SearchCard: NextPage<Props> = (props) => {
 
     const context: any = useContext(AppContext);
     let selectedItem: [any] = context.values.state.selectedItem;
-    let lastId: number
-    const selected = context.values.state.selectedCol
-    selected.games.length >= 1 ?
-        lastId = selected.games[selected.games.length -1].id
-        : lastId = 0
+    const selected: any = context.values.state.selectedCol
+    const [ selectedCol, setSelectedCol ] = context.getColumn;
 
     const addCardToColumn = (
         name: string,
@@ -32,23 +29,15 @@ const SearchCard: NextPage<Props> = (props) => {
         img: string,
     ) => {
         let newGame:any
-        platforms.length > 0
-            ?  newGame = {
+            newGame = {
                 id: name,
                 name: name,
                 genre: genre,
-                platforms: platforms,
+                platforms: platforms.length > 0 ? platforms : [],
                 img: img
         }
-            :  newGame = {
-                id: name,
-                name: name,
-                genre: genre,
-                platforms: [],
-                img: img
-        }
-        selected.games.unshift(newGame)
-        console.log(selected.games)
+
+        context.newGame(newGame)
     }
 
     const { name, genre, platforms, img } = props;
