@@ -39,4 +39,8 @@
     .flexCard div button:last-child i {
         font-size: 23px;
     }
+
+    .flexCard {
+        touch-action: none;
+    }
 }

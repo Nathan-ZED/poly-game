@@ -66,7 +66,12 @@ const Column: NextPage<Props> = (props:Props) => {
         context.newGame = (el:any) => addNewGame(el)
     }
 
-  return (
+    const disableScroll = (e) => {
+        console.log('coucou')
+    }
+
+
+    return (
       <Reorder.Item
           value={props.column}
           key={props.column.id}
@@ -77,7 +82,8 @@ const Column: NextPage<Props> = (props:Props) => {
           <div className={styles.column}>
               <div
                   className="reorder-handle"
-                  onPointerDown={(e) => controls.start(e)}>
+                  onPointerDown={(e) => controls.start(e)}
+                  onDragStart={(e) => disableScroll(e)}>
                     <ColumnHead
                         showAndGetColumn={showAndGetColumn}
                         column={props.column}

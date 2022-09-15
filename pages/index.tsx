@@ -44,10 +44,10 @@ const Home: NextPage = () => {
     useEffect(() => {
         setIsMobile(isTabletOrMobile)
         if(isMobile) {
-            setAxis('y')
             setHeight('100vh')
             setScroll('scroll')
         }
+        !isTabletOrMobile ? setAxis('x') : setAxis('y')
         context.showAdd = [addVisible, showAdd];
     }, [context, addVisible, isTabletOrMobile]);
 

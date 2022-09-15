@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import styles from '../../../styles/Column/ColumnHead/ColumnHead.module.css'
 import '@fortawesome/fontawesome-free/css/all.css';
-import {MouseEventHandler, useContext, useEffect, useState} from "react";
+import {MouseEventHandler, useContext, useEffect, useRef, useState} from "react";
 import { motion } from "framer-motion";
 import AppContext from "../../../context/AppContext";
 import {useMediaQuery} from "react-responsive";
@@ -33,6 +33,7 @@ const ColumnHead: NextPage<Props> = (props:Props) => {
         background: props.color,
       };
 
+    const trigger = useRef()
     useEffect(() => {
         setIsMobile(isTabletOrMobile)
     }, [isTabletOrMobile])
@@ -48,7 +49,6 @@ const ColumnHead: NextPage<Props> = (props:Props) => {
         }
         setAddVisible(!visible, bool)
     }
-
   return (
       <>
         <div
