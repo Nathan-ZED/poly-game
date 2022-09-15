@@ -11,16 +11,14 @@ type Props = {
 }
 
 const SearchGame: NextPage<Props> = (props: Props) => {
-
     const context: any = useContext(AppContext);
     const baseUrl = 'https://api.rawg.io/api/';
     const ApiKey = context.values.state.token
-
     const [data, setData] = useState([]);
     const [inputValue, setInputValue] = useState('')
     const [timer, setTimer] = useState(0)
 
-    //Recuperation des jeux en fonction de l'input sur rawg.io
+    //Récuperation des jeux en fonction de l'input sur rawg.io
     const getGames = async (value: string) => {
         try {
             await fetch(`${baseUrl}games?search=${value}&key=${ApiKey}`)
@@ -31,7 +29,7 @@ const SearchGame: NextPage<Props> = (props: Props) => {
         }
     }
 
-    // Appel de recuperation des jeux avec envoi de la valeur de l'input
+    // Fonction d'appel de recuperation des jeux avec envoi de la valeur de l'input
     // uniquement quand l'utilisateur a fini de taper depuis 400ms
     const inputChanged = (value: string) => {
         setInputValue(value)

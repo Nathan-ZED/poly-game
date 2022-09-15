@@ -2,14 +2,11 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import logo from '../../public/assets/images/logo.svg'
 import styles from '../../styles/Nav/Nav.module.css'
-import {useMediaQuery} from "react-responsive";
-import {useState} from "react";
 
 type Props = {
     css: any,
     global: any
 }
-
 
 const Nav: NextPage<Props> = (props) => {
   return (

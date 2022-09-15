@@ -15,8 +15,6 @@ type Props = {
 }
 
 const Column: NextPage<Props> = (props:Props) => {
-
-
     const [selectedColumn, setSelectedColumn] = useState(props.column);
     const [games, setGames] = useState<any>(selectedColumn.games);
     const context: any = useContext(AppContext);
@@ -24,16 +22,20 @@ const Column: NextPage<Props> = (props:Props) => {
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
     const [isMobile, setIsMobile] = useState(false)
 
+    //Recuperation de la colonne dans le contexte et mise a jour du state
     const showAndGetColumn = (column: any) => {
         props.show(true);
         setSelectedColumn(column);
         getColumn();
     }
 
+    //Application d'un state pour appeller la lib de responsive pour eviter
+    //un problème d'hydratation
     useEffect(() => {
         setIsMobile(isTabletOrMobile)
     }, [isTabletOrMobile])
 
+    //Fonction d'ajout au favoris appellée par le composant "Star"
     const newFavorite = (elem: any, active: boolean) => {
         let Games = [...games]
         let count = 0;
@@ -53,23 +55,22 @@ const Column: NextPage<Props> = (props:Props) => {
 
     }
 
+    //Fonction d'ajout de d'un jeu lors d'un clic
+    //sur le resultat de recherche, composant: "SearchCard"
     const addNewGame = (game: any) => {
         const newArr = [...games]
         newArr.unshift(game)
         setGames(newArr)
     }
 
+
+    //Fonction de récupération de la colonne et insertion dans le contexte
     const getColumn = () => {
         setSelectedColumn(props.column)
         context.getColumn = [selectedColumn, setSelectedColumn]
         context.values.state.selectedCol = selectedColumn;
         context.newGame = (el:any) => addNewGame(el)
     }
-
-    const disableScroll = (e) => {
-        console.log('coucou')
-    }
-
 
     return (
       <Reorder.Item
@@ -82,8 +83,7 @@ const Column: NextPage<Props> = (props:Props) => {
           <div className={styles.column}>
               <div
                   className="reorder-handle"
-                  onPointerDown={(e) => controls.start(e)}
-                  onDragStart={(e) => disableScroll(e)}>
+                  onPointerDown={(e) => controls.start(e)}>
                     <ColumnHead
                         showAndGetColumn={showAndGetColumn}
                         column={props.column}

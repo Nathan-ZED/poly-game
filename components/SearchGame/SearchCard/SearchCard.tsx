@@ -3,7 +3,7 @@ import Image from 'next/image'
 import styles from '../../../styles/SearchGame/SearchCard/SearchCard.module.css'
 import '@fortawesome/fontawesome-free/css/all.css';
 import { motion } from 'framer-motion';
-import {useContext, useEffect} from "react";
+import {useContext} from "react";
 import AppContext from "../../../context/AppContext";
 import noImg from '../../../public/assets/images/no-img.jpeg'
 
@@ -16,12 +16,9 @@ type Props = {
 
 
 const SearchCard: NextPage<Props> = (props) => {
-
     const context: any = useContext(AppContext);
-    let selectedItem: [any] = context.values.state.selectedItem;
-    const selected: any = context.values.state.selectedCol
-    const [ selectedCol, setSelectedCol ] = context.getColumn;
 
+    //Fonction d'ajout du choix recherché dans la bonne colonne
     const addCardToColumn = (
         name: string,
         genre: string,

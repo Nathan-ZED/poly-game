@@ -3,8 +3,8 @@ import type { AppProps } from 'next/app'
 import '@fortawesome/fontawesome-free/css/all.css';
 import AppContext from "../context/AppContext";
 import {useContext, useState} from "react";
-import ReactDOM from 'react-dom';
 
+//Initialisation du contexte avec des valeurs par default
 const values = {
     state: {
         columns: [

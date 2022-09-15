@@ -29,16 +29,20 @@ const ColumnHead: NextPage<Props> = (props:Props) => {
 
     const { icon, color, name } = props;
 
+    //Recuperation de la couleur de fond
     const headStyle = {
         background: props.color,
       };
 
-    const trigger = useRef()
+    //Application d'un state pour appeller la lib de responsive pour eviter
+    //un problème d'hydratation
     useEffect(() => {
         setIsMobile(isTabletOrMobile)
     }, [isTabletOrMobile])
 
 
+    //Fonction pour afficher la popup d'edition avec les données
+    //de la colonne selectionnée
     const showEdit = (visible: boolean, bool:boolean) => {
         props.getColumn(props.column)
 

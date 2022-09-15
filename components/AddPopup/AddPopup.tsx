@@ -14,6 +14,7 @@ type Props = {
     columns: any,
 }
 
+//Couleurs dispo dans le colorPicker
 const colors = [
     '#f5f8f9',
     '#E8637A',
@@ -45,15 +46,17 @@ const AddPopup: NextPage<Props> = (props: Props) => {
     const bg = {
         background: bgColor
     }
+
     let ico: string, name: string;
     let newColumn
 
+    //On recupere les valeurs si le mode edition est activé
     if(props.editMode) {
         ico = context.editValues.ico
         name = context.editValues.name
     }
 
-
+    //Fonction d'ajout de nouvelle colonne
     const addNewColumn = () => {
         if(colName === '') {
             setError(true)
@@ -74,6 +77,7 @@ const AddPopup: NextPage<Props> = (props: Props) => {
         }
     }
 
+    //Fonction d'edition de colonne
     const editColumn = () => {
         if(colName === '') {
             setError(true)
@@ -81,7 +85,7 @@ const AddPopup: NextPage<Props> = (props: Props) => {
             error ? setError(false) : null
             show(false)
             const colCopy: any = [...columns]
-            const colToEdit = colCopy.findIndex(el => el.name === name)
+            const colToEdit = colCopy.findIndex((el: { name: string; }) => el.name === name)
             const newID = colCopy.length + 1
             colCopy.slice(colToEdit, 1)
             newColumn = {
@@ -97,6 +101,7 @@ const AddPopup: NextPage<Props> = (props: Props) => {
 
     }
 
+    //Verification de l'edit mode
     useEffect(() => {
         props.editMode
             ? setBgColor(context.editValues.color)

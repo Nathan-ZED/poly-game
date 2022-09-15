@@ -10,16 +10,15 @@ type Props = {
     putCardFavorite: Function,
     setFavorite: Function,
     game: any
-    isFavorite: boolean,
     id: number,
 }
 
 
 const Star: NextPage<Props> = (props:Props) => {
 
-    const { putCardFavorite, isFavorite, game } = props
+    const { putCardFavorite, game } = props
 
-
+    //Envoi de l'etat actif aux composants parents
     const putActive = (activ: boolean) => {
         putCardFavorite(activ)
     }

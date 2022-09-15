@@ -13,7 +13,6 @@ import {useMediaQuery} from "react-responsive";
 
 
 const Home: NextPage = () => {
-
     const context: any = useContext(AppContext);
     const [searchVisible, setSearchVisible] = useState(false);
     const [addVisible, setAddVisible] = useState(false);
@@ -26,21 +25,23 @@ const Home: NextPage = () => {
     const [scroll, setScroll] = useState('hidden')
 
 
+    //Fonction qui permet d'afficher la search bar
+    //Déclenchée par le bouton en bas du composant "Column"
+    //Ou par le bouton + du composant "ColumnHead"
     const show = (show:boolean) => {
         setSearchVisible(show);
     }
 
 
+    //Fonction qui permet d'afficher la popup d'ajout ou d'edition
+    //Apellée par "AddPopup"
     const showAdd = (show: boolean, edit: boolean) => {
         setAddVisible(show);
         setEditMode(edit);
     }
 
-    const heightVar:any = {
-        height: height,
-        overflowY: scroll
-    }
-
+    //Application d'un state pour appeller la lib de responsive pour eviter
+    //un problème d'hydratation
     useEffect(() => {
         setIsMobile(isTabletOrMobile)
         if(isMobile) {

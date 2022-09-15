@@ -25,9 +25,9 @@ const ColumnCard: NextPage<Props> = (props) => {
     const context: any = useContext(AppContext)
     const column = context.values.state.selectedCol
     const [game, setGame] = useState(gameInfo)
-
     const [isFavorite,  setIsFavorite] = useState<boolean>(false);
 
+    //Fonction permettant de gérer les states pour les favoris
     const putCardFavorite = async (active: any) => {
         if(active) {
             setIsFavorite(true)
@@ -39,6 +39,7 @@ const ColumnCard: NextPage<Props> = (props) => {
         props.newFavorite(gameInfo, active)
     }
 
+    //Ajout du jeu et l'image au state
     useEffect(() => {
         setGame(gameInfo)
         setImgUrl(game.img)
@@ -52,7 +53,6 @@ const ColumnCard: NextPage<Props> = (props) => {
                         putCardFavorite={(isFavorite: any) => putCardFavorite(isFavorite)}
                         id={id}
                         game={gameInfo}
-                        isFavorite={isFavorite}
                         setFavorite={setIsFavorite}
                     />
             <article>
