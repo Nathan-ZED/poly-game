@@ -11,7 +11,7 @@
 }
 
 .card {
-    background: rgba(255, 255, 255, 1);
+    background: #fff !important;
     padding: 10px;
     width: 90%;
     margin: 0 auto 1rem;
@@ -63,4 +63,12 @@
     font-size: 8px;
     white-space: break-spaces;
     color: rgba(0, 0, 0, 1);
+}
+
+@media screen and (max-width: 920px) {
+    .card {
+        width: 75% !important;
+        min-width: 75%;
+        margin: 0 .5rem !important;
+    }
 }

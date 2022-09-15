@@ -31,3 +31,14 @@
     color: white;
     width: 32px;
 }
+
+@media screen and (max-width: 920px) {
+    .addColumn {
+        height: 20vh;
+        min-width: 100%;
+        position: fixed;
+        right: 0;
+        top: 80vh;
+        z-index: 10;
+    }
+}

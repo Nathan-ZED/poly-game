@@ -7,7 +7,6 @@
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.17);
     cursor: grab;
     white-space: nowrap;
-    width: 90%;
 }
 
 .flexCard:active {
@@ -29,5 +28,15 @@
 }
 
 .flexCard h3 {
-    margin: 0 0 0 1rem;
+    margin: 0 1rem;
+}
+
+@media screen and (max-width: 920px) {
+    .flexCard div button:first-child i {
+        font-size: 22px;
+    }
+
+    .flexCard div button:last-child i {
+        font-size: 23px;
+    }
 }

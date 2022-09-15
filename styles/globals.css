@@ -40,6 +40,14 @@
     font-weight: 700;
     font-style: auto;
    }
+
+    html,
+    body,
+    body > div:first-child,
+    div#__next,
+    div#__next > div {
+        height: 100%;
+    }
    
     main {
         font-family: 'Sarala', sans-serif;
@@ -56,3 +64,10 @@
     body::-webkit-scrollbar {
         display: none;
     }
+
+@media screen and (max-width: 920px) {
+    body {
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+}

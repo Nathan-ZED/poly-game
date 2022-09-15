@@ -120,3 +120,31 @@
     font-size: 20px;
     outline: none;
 }
+
+
+@media screen and (max-width: 920px) {
+    .input article {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+
+    .colorWrapper {
+        flex-direction: column;
+        width: 90%;
+    }
+
+    .colorWrapper div {
+        width: 100%;
+        margin: .5rem 0 1rem;
+    }
+
+    .colorWrapper div button {
+        width: 25px !important;
+        height: 25px !important;
+        margin: 0 .4rem .4rem;
+    }
+    .addBtn {
+        width: 100%;
+    }
+}

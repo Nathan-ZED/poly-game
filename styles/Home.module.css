@@ -8,8 +8,16 @@
     width: calc(100% - 400px);
 }
 
-.list li.listLi {
-    width: 320px;
+.list li:nth-child(odd) {
+    background: #F1F5F6;
+}
+
+.list li:nth-child(even) {
+    background: #ECEFF0;
+}
+
+.list li {
+    width: 85%;
 }
 
 .add {
@@ -22,4 +30,20 @@
 
 .list:nth-child(:last-child) {
     margin-right: 400px;
+}
+
+@media screen and (max-width: 920px) {
+    .list {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        overflow-y: scroll;
+        height: 100%;
+        max-height: calc(100vh - 30vh);
+    }
+
+    .list li {
+        width: 100vw;
+        min-height: auto;
+    }
 }

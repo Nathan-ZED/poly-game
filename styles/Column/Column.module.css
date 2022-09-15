@@ -1,18 +1,14 @@
 .column {
     min-height: 100vh !important;
-    min-width: 18vw;
-    max-width: 19vw;
-    width: 100%;
     list-style: none;
     padding: 0;
     user-select: none;
-}
-
-.column ul.col{
-    min-height: 100%;
+    width: 100%;
+    min-width: 280px;
 }
 
 .column ul.col {
+    min-height: 100%;
     margin: 0 0 !important;
     display: flex;
     flex-direction: column;
@@ -36,4 +32,33 @@
     width: 27px;
     height: 27px;
     background-color: #fff;
+}
+
+@media screen and (max-width: 920px) {
+    .column {
+        min-height: 150px !important;
+        min-width: 100%;
+    }
+
+    .column ul.col {
+        flex-direction: row;
+        margin: 0 0 !important;
+        justify-content: flex-start;
+        padding: 10px 0 !important;
+        overflow: visible;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-align: start;
+        scroll-snap-type: x mandatory;
+    }
+
+    .column ul.col li {
+        scroll-snap-align: start;
+    }
+
+    div #rowButton {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
 }

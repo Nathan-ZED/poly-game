@@ -45,3 +45,15 @@
 .pale_green {
     color: rgba(119, 164, 189, 1);
 }
+
+@media screen and (max-width: 920px) {
+    .nav {
+        justify-content: center;
+    }
+
+    .logo {
+        width: 42px !important;
+        height: 17px !important;
+        object-fit: cover;
+    }
+}

@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 import '@fortawesome/fontawesome-free/css/all.css';
 import AppContext from "../context/AppContext";
 import {useContext, useState} from "react";
+import ReactDOM from 'react-dom';
 
 const values = {
     state: {
@@ -65,7 +66,6 @@ const values = {
 }
 
 export const useGlobalContext = () => useContext(AppContext)
-
 
 function MyApp({ Component, pageProps }: AppProps) {
 

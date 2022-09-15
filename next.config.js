@@ -4,6 +4,9 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: ['media.rawg.io']
+  },
+  flags: {
+    DEV_SSR: false,
   }
 }
 

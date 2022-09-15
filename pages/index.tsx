@@ -6,9 +6,10 @@ import Column from '../components/Column/Column'
 import SearchGame from '../components/SearchGame/SearchGame'
 import {useContext, useEffect, useRef, useState} from "react";
 import AddColumn from "../components/AddColumn/AddColumn";
-import {Reorder} from "framer-motion";
+import {Reorder, motion} from "framer-motion";
 import AddPopup from "../components/AddPopup/AddPopup";
 import AppContext from "../context/AppContext";
+import {useMediaQuery} from "react-responsive";
 
 
 const Home: NextPage = () => {
@@ -17,25 +18,38 @@ const Home: NextPage = () => {
     const [searchVisible, setSearchVisible] = useState(false);
     const [addVisible, setAddVisible] = useState(false);
     const [columns, setColumns] = useState(context.values.state.columns);
-    const [isOd, setIsOdd] = useState(true);
     const [editMode, setEditMode] = useState(false);
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+    const [isMobile, setIsMobile] = useState<boolean>(false)
+    const [axis, setAxis] = useState<any>('x')
+    const [height, setHeight] = useState('auto')
+    const [scroll, setScroll] = useState('hidden')
 
-    const bgCallback = (b: boolean) => {
-        b ? setIsOdd(!b) : setIsOdd(!b);
-    }
 
     const show = (show:boolean) => {
         setSearchVisible(show);
     }
+
 
     const showAdd = (show: boolean, edit: boolean) => {
         setAddVisible(show);
         setEditMode(edit);
     }
 
+    const heightVar:any = {
+        height: height,
+        overflowY: scroll
+    }
+
     useEffect(() => {
+        setIsMobile(isTabletOrMobile)
+        if(isMobile) {
+            setAxis('y')
+            setHeight('100vh')
+            setScroll('scroll')
+        }
         context.showAdd = [addVisible, showAdd];
-    }, [context, addVisible]);
+    }, [context, addVisible, isTabletOrMobile]);
 
   return (
     <>
@@ -50,7 +64,7 @@ const Home: NextPage = () => {
       </header>
       <main>
             <Reorder.Group
-                axis={'x'}
+                axis={axis}
                 values={columns}
                 onReorder={setColumns}
                 className={styles.list}>
@@ -60,8 +74,7 @@ const Home: NextPage = () => {
                                     column={column}
                                     show={show}
                                     showAdd={(show: boolean) => showAdd}
-                                    bgCallback={bgCallback}
-                                    isOdd={isOd} />
+                                />
                     )}
             </Reorder.Group>
                 <AddColumn

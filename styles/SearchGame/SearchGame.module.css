@@ -77,3 +77,34 @@
 .inputEl[type="search"]::-webkit-search-cancel-button {
     display: none;
 }
+
+@media screen and (max-width: 920px) {
+    .bg .input {
+        width: 90%;
+        height: 60px;
+    }
+
+    .input input {
+        font-size: 17px;
+        width: 60%;
+    }
+
+    .input input::placeholder {
+        font-size: 17px;
+    }
+
+    .input i {
+        margin: 0 1rem 0 2rem;
+        font-size: 25px;
+    }
+
+    .resultWrapper {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        width: 90%;
+        justify-content: flex-start;
+        align-items: center;
+        max-height: 400px;
+        height: 400px;
+    }
+}
